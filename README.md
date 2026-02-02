@@ -1,37 +1,93 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Marketing Agency Website</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Be My Valentine 💘</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      position: relative;
+      width: 300px;
+    }
+
+    h1 {
+      color: #e63946;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background-color: #e63946;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #adb5bd;
+      color: white;
+      position: absolute;
+    }
+
+    #message {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #e63946;
+    }
+  </style>
 </head>
 <body>
-  <!-- Header Section -->
-  <header>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Welcome to Our Marketing Agency</h1>
-    <p>We help businesses grow through innovative marketing strategies.</p>
-    <button>Learn More</button>
-  </section>
-  <!-- Main Content Section -->
-  <section class="main-content">
-    <!-- Add content here -->
-  </section>
-  <!-- Footer Section -->
-  <footer>
-    <p>&copy; 2024 Marketing Agency Website</p>
-  </footer>
-  <script src="script.js"></script>
+
+  <div class="container">
+    <h1>Will you be my Valentine? 💕</h1>
+
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+
+    <div id="message">
+      I know you will say yes 😘  
+      <br><br>
+      I love you too ❤️❤️❤️
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 200;
+      const y = Math.random() * 200;
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    yesBtn.addEventListener("click", () => {
+      message.style.display = "block";
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+    });
+  </script>
+
 </body>
 </html>
