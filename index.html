@@ -12,6 +12,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      overflow: hidden;
     }
 
     .container {
@@ -21,6 +22,7 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       position: relative;
       width: 300px;
+      z-index: 2;
     }
 
     h1 {
@@ -53,12 +55,31 @@
       font-size: 18px;
       color: #e63946;
     }
+
+    /* 💋 Kiss animation */
+    .kiss {
+      position: absolute;
+      font-size: 30px;
+      animation: floatUp 2s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-120px) scale(1.5);
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>Will you be my Valentine? 💕</h1>
+    <h1>Hey Raul, will you be my Valentine? 💕</h1>
 
     <button id="yesBtn">Yes</button>
     <button id="noBtn">No</button>
@@ -66,7 +87,7 @@
     <div id="message">
       I know you will say yes 😘  
       <br><br>
-      I love you too ❤️❤️❤️
+      I love you too ❤️❤️❤️ 💄
     </div>
   </div>
 
@@ -86,7 +107,27 @@
       message.style.display = "block";
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
+
+      // 💋 create kiss animation
+      for (let i = 0; i < 6; i++) {
+        createKiss();
+      }
     });
+
+    function createKiss() {
+      const kiss = document.createElement("div");
+      kiss.className = "kiss";
+      kiss.innerText = "💋";
+
+      kiss.style.left = Math.random() * window.innerWidth + "px";
+      kiss.style.top = window.innerHeight - 100 + "px";
+
+      document.body.appendChild(kiss);
+
+      setTimeout(() => {
+        kiss.remove();
+      }, 2000);
+    }
   </script>
 
 </body>
