@@ -1,57 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Be My Valentine 💘</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       background: linear-gradient(to right, #ff9a9e, #fad0c4);
       height: 100vh;
+      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
       overflow: hidden;
+      padding: 16px;
+      box-sizing: border-box;
     }
 
     .container {
       background: white;
-      padding: 30px;
+      padding: 28px;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       position: relative;
-      width: 300px;
+      width: min(340px, 92vw);
       z-index: 2;
+      overflow: hidden; /* keeps the No button inside */
     }
 
-    h1 {
-      color: #e63946;
+    h1 { color: #e63946; margin: 0 0 18px; }
+
+    .btnRow {
+      position: relative;
+      height: 56px; /* space for the moving No button */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
 
     button {
       padding: 10px 20px;
-      margin: 10px;
       font-size: 16px;
       border: none;
       border-radius: 20px;
       cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
     }
 
-    #yesBtn {
-      background-color: #e63946;
-      color: white;
-    }
+    #yesBtn { background-color: #e63946; color: white; }
 
     #noBtn {
       background-color: #adb5bd;
       color: white;
       position: absolute;
+      left: 55%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
 
     #message {
       display: none;
-      margin-top: 20px;
+      margin-top: 18px;
       font-size: 18px;
       color: #e63946;
     }
@@ -65,42 +78,65 @@
     }
 
     @keyframes floatUp {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-120px) scale(1.5);
-      }
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-120px) scale(1.5); }
     }
   </style>
 </head>
 <body>
-
-  <div class="container">
+  <div class="container" id="card">
     <h1>Hey Rahul, will you be my Valentine? 💕</h1>
 
-    <button id="yesBtn">Yes</button>
-    <button id="noBtn">No</button>
+    <div class="btnRow" id="btnArea">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
 
     <div id="message">
-      I know you will say yes 😘  
+      I know you will say yes 😘
       <br><br>
-      I love you too ❤️❤️❤️
+      I love you too ❤️❤️❤️ 💄
     </div>
   </div>
 
   <script>
+    const card = document.getElementById("card");
+    const btnArea = document.getElementById("btnArea");
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const message = document.getElementById("message");
 
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200;
-      const y = Math.random() * 200;
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+    function moveNoButton() {
+      // Keep movement inside the button area
+      const areaRect = btnArea.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = areaRect.width - btnRect.width;
+      const maxY = areaRect.height - btnRect.height;
+
+      // random position within bounds
+      const x = Math.random() * Math.max(0, maxX);
+      const y = Math.random() * Math.max(0, maxY);
+
+      // position relative to btnArea
+      noBtn.style.left = `${x + btnRect.width / 2}px`;
+      noBtn.style.top = `${y + btnRect.height / 2}px`;
+      noBtn.style.transform = "translate(-50%, -50%)";
+    }
+
+    // Desktop hover
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    // Mobile touch
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault(); // stops the tap from "clicking" it
+      moveNoButton();
+    }, { passive: false });
+
+    // Also move on click (covers some devices)
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      moveNoButton();
     });
 
     yesBtn.addEventListener("click", () => {
@@ -108,10 +144,7 @@
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
 
-      // 💋 create kiss animation
-      for (let i = 0; i < 6; i++) {
-        createKiss();
-      }
+      for (let i = 0; i < 7; i++) createKiss();
     });
 
     function createKiss() {
@@ -120,15 +153,11 @@
       kiss.innerText = "💋";
 
       kiss.style.left = Math.random() * window.innerWidth + "px";
-      kiss.style.top = window.innerHeight - 100 + "px";
+      kiss.style.top = window.innerHeight - 120 + "px";
 
       document.body.appendChild(kiss);
-
-      setTimeout(() => {
-        kiss.remove();
-      }, 2000);
+      setTimeout(() => kiss.remove(), 2000);
     }
   </script>
-
 </body>
-</html>
+</
